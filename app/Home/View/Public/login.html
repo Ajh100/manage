@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>捷和连锁管理系统 - 管理员登录</title>
+<link href="__PUBLIC__/admin/images/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.form.js"></script>
+<script type="text/javascript">
+//表单验证
+$(function () {	
+	$('#submitbtn').click(function(){
+		if(checkform()){
+			submitform();
+		}
+	});
+	
+	$(document).keydown(function (event) {
+		if(event.keyCode == 13) {
+			if(checkform()){
+				submitform();
+			}
+		}
+	});
+});
+
+function checkform(){
+	if(cookie('login_error_times')>2){
+		$('#submitbtn').text('请三分钟后重试');
+		return ;
+	}
+	if($('#txtUserName').val() == ''){
+		$('#txtUserName').focus();
+		alert('用户名不能为空');
+		return false;
+	}
+	if($('#txtUserPwd').val() == ''){
+		$('#txtUserPwd').focus();
+		alert('密码不能为空');
+		return false;
+	}
+	if($('#txtCode').val() == ''){
+		$('#txtCode').focus();
+		alert('验证码不能为空');
+		return false;
+	}	
+	return true;
+}
+    
+function submitform(){
+	if(cookie('login_error_times')>2){
+		$('#submitbtn').text('请三分钟后重试');
+		return ;
+	}
+	$('#form1').ajaxSubmit(function(){
+		$.ajax({
+			type: 'post',
+			url:"{:U('public/checklogin')}",
+			data:$('#form1').serialize(),
+			dataType:"json",
+			error:function(data){
+				alert('登陆失败请稍后重试');
+			},
+			success:function(data){
+				if(data.status == 1){
+					alert(data.msg);
+					ToggleCode($('.code-img'), '{:U('public/verify')}');
+				}else{
+					window.location = '{:U('Index/index')}';
+				}
+			}
+		});
+	})
+}
+
+function ToggleCode(obj, codeurl){
+	$(obj).attr("src", codeurl + "?time=" + Math.random());
+}
+
+function cookie(name){    
+ 
+   var cookieArray=document.cookie.split("; "); 
+ 
+   var cookie=new Object();    
+ 
+   for (var i=0;i<cookieArray.length;i++){    
+ 
+      var arr=cookieArray[i].split("=");
+ 
+      if(arr[0]==name)return unescape(arr[1]);
+ 
+   } 
+ 
+   return ""; 
+ 
+} 
+</script>
+</head>
+
+<body class="loginbody">
+
+<form name="form1" method="post" action="" id="form1">
+<div class="login_div">
+	<div class="login_box">
+    	<div class="login_logo">LOGO</div>
+        <div class="login_content">
+          <dl>
+			<dt>登录账号：</dt>
+            <dd><input name="txtusername" type="text" id="txtUserName" class="login_input required" style="width:130px;" /></dd>
+          </dl>
+          <dl>
+			<dt>登录密码：</dt>
+            <dd><input name="txtuserpwd" type="password" id="txtUserPwd" class="login_input required" style="width:130px;" /></dd>
+          </dl>
+          <dl>
+			<dt>验证码：</dt>
+            <dd>
+                <input name="txtcode" type="text" maxlength="6" id="txtCode" class="login_input required" style="width:55px;text-transform:uppercase;" />
+                <img src="__URL__/verify" class="code-img" width="70" height="22" alt="点击切换验证码" title="点击切换验证码" style=" margin-top:2px; vertical-align:top;cursor:pointer;" onclick="ToggleCode(this, '__URL__/verify');return false;" />
+            </dd>
+          </dl>
+        </div>
+        <div class="login_foot">
+			<div class="right"><button id="submitbtn" class="login_btn" type="button">登录</button></div>
+		</div>
+        <div class="login_tip">
+            
+        </div>
+    </div>
+	<div class="login_copyright">Copyright © 20014 - 2024 www.jh100.com Inc. All Rights Reserved.<br />捷和集团 版权所有</div>
+</div>
+</form>
+</body>
+</html>

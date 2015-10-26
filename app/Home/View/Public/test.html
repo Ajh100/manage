@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<js href="__PUBLIC__/js/jquery/jquery-2.0.2.js" />
+    <js href="__PUBLIC__/ueditor/ueditor.config.js" />    
+    <js href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+    <script>
+    $(function(){
+        var ue = UE.getEditor('container',{
+            serverUrl :'{:U('public/ueditor')}'
+        });
+    })
+    </script>
+    </head>
+    <body>
+        <div id="container"></div>
+    </body>
+</html>

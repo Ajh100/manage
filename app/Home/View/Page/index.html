@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>内容管理</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/js/ui/skins/Aqua/css/ligerui-all.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/images/style.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/css/pagination.css" />
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/ui/js/ligerBuild.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/function.js"></script>
+</head>
+<body class="mainbody">
+
+<form name="form1" method="post" action="__SELF__" id="form1">
+
+<script type="text/javascript">
+//<![CDATA[
+function __doPostBack() {
+	var form = $('#form1');
+	form.attr('action', '__URL__/delall');
+	form.submit();
+}
+//]]>
+</script>
+
+
+  <div class="navigation">首页 &gt; 内容管理 &gt; 内容列表</div>
+    <div class="tools_box">
+	    <div class="tools_bar">
+            <div class="search_box">
+			    <input name="keywords" type="text" id="keywords" class="txtInput" />
+                <input type="submit" name="btnSearch" value="搜 索" id="btnSearch" class="btnSearch" />
+		    </div>
+            <a href="__URL__/add" class="tools_btn"><span><b class="add">增加内容</b></span></a>
+		    <a href="javascript:void(0);" onclick="checkAll(this);" class="tools_btn"><span><b class="all">全选</b></span></a>
+            <a onclick="return ExePostBack('btnDelete');" id="btnDelete" class="tools_btn" href="javascript:__doPostBack('btnDelete','')"><span><b class="delete">批量删除</b></span></a>
+        </div>
+    </div>
+
+    <!--列表展示.开始-->
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="msgtable">
+      <tr>
+        <th width="6%">选择</th>
+        <th align="left">标题</th>
+        <th width="16%" align="left">所属类别</th>
+        <th width="16%" align="left">banner图片</th>
+        <th width="60" align="left">排序</th>
+        <th width="80">属性</th>
+        <th width="8%">操作</th>
+      </tr>
+    <volist name="list" id="vo">
+      <tr>
+        <td align="center">
+        <span class="checkall">
+        <input id="rptList_ctl01_chkId" type="checkbox" name="id[]" value="{$vo.id}" /></span>
+        </td>
+        <td><a href="__URL__/edit/id/{$vo.id}">{$vo.title}</a></td>
+        <td>{$vo.classtitle}</td>
+        <td><eq name="vo.banner" value="">无图<else/><img src="{:C('WEB_RES_URL')}{$vo.banner}" width="50" height="20" /></eq></td>
+        <td align="center"><input type="text" value="{$vo.sort}" class="txtInput2 small2" /></td>
+        <td align="center">
+          <eq name="vo.status" value="0">
+          	  <img src="__PUBLIC__/admin/images/icon_correct.png" title="已开启">
+          <else/>
+          	  <img src="__PUBLIC__/admin/images/icon_disable.png" title="未开启">
+          </eq>
+        </td>
+        <td align="center"><a href="__URL__/edit/id/{$vo.id}">修改</a></td>
+      </tr>
+    </volist>
+    
+      </table>
+    
+    <!--列表展示.结束-->
+
+  <div class="line15"></div>
+    <div class="page_box"><div id="PageContent" class="flickr right">{$page}</div></div>
+    <div class="line10"></div>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>添加城市</title>
+<link href="__PUBLIC__/admin/js/ui/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/admin/images/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.validate.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/messages_cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/ui/js/ligerBuild.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/function.js"></script>
+<script type="text/javascript">
+    //表单验证
+    $(function () {
+        $("#form1").validate({
+            errorPlacement: function (lable, element) {
+                element.ligerTip({ content: lable.html(), appendIdTo: lable });
+            },
+            success: function (lable) {
+                lable.ligerHideTip();
+            }
+        });
+		
+    });
+</script>
+</head>
+<body class="mainbody">
+<form name="form1" method="post" action="__SELF__" id="form1">
+
+
+<div class="navigation"><a href="javascript:history.go(-1);" class="back">后退</a>首页 &gt; 城市管理 &gt; 添加城市</div>
+<div id="contentTab">
+    <ul class="tab_nav">
+        <li class="selected"><a onclick="tabs('#contentTab',0);" href="javascript:;">添加城市</a></li>
+    </ul>
+    <div class="tab_con" style="display:block;">
+        <table class="form_table">
+            <col width="180px"><col>
+            <tbody>
+            <tr>
+              <th>所属省份：</th>
+              <td>
+              <select name="area_id" id="area_id" class="select2 required prov">
+                <option value="">请选省份...</option>
+                <volist name="area" id="vo">
+                <option value="{$vo.id}">{$vo.title}</option>
+                </volist>
+              </select>
+              </td>
+            </tr>
+            <tr>
+              <th>城市：</th>
+              <td>
+                <input name="title" type="text" maxlength="255" id="title" class="txtInput normal required" minlength="2" />
+              </td>
+            </tr>
+            <tr>
+              <th>全称：</th>
+              <td>
+                <input name="fullname" type="text" maxlength="255" id="title" class="txtInput normal required" minlength="2" /> 请按行政规划名称,用户ip定位
+              </td>
+            </tr>
+            <tr>
+              <th>城市拼音：</th>
+              <td><input name="pinyin" type="text" maxlength="255" id="txtTitle2" class="txtInput normal required" minlength="2" />
+              <label>*</label></td>
+            </tr>
+            <tr>
+              <th>审核状态：</th>
+              <td><span id="rblIsLock2">
+                <input id="rblIsLock_2" type="radio" name="status" value="0" checked="checked" />
+                <label for="rblIsLock_2">已审核 </label>
+                <input id="rblIsLock_3" type="radio" name="status" value="1" />
+                <label for="rblIsLock_3">待审核</label>
+              </span></td>
+            </tr>
+            <tr>
+              <th>排 序：</th>
+              <td><input name="sort" type="text" value="0" id="sort" class="txtInput normal small required digits" />
+                <label>*</label></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td><input type="submit" name="btnSubmit" value="提交保存" id="btnSubmit" class="btnSubmit" /></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+</form>
+</body>
+</html>

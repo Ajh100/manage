@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>系统参数设置</title>
+<link href="__PUBLIC__/admin/js/ui/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/admin/images/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.validate.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/messages_cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/ui/js/ligerBuild.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/function.js"></script>
+<script type="text/javascript">
+    //表单验证
+    $(function () {
+        $("#form1").validate({
+            invalidHandler: function (e, validator) {
+                parent.jsprint("有 " + validator.numberOfInvalids() + " 项填写有误，请检查！", "", "Warning");
+            },
+            errorPlacement: function (lable, element) {
+                //可见元素显示错误提示
+                if (element.parents(".tab_con").css('display') != 'none') {
+                    element.ligerTip({ content: lable.html(), appendIdTo: lable });
+                }
+            },
+            success: function (lable) {
+                lable.ligerHideTip();
+            }
+        });
+    });
+</script>
+</head>
+<body class="mainbody">
+<form name="form1" method="post" action="__URL__/save" id="form1">
+
+<div class="navigation">首页 &gt; 控制面板 &gt; 系统参数设置</div>
+<div id="contentTab">
+    <ul class="tab_nav">
+        <li class="selected"><a onclick="tabs('#contentTab',0);" href="javascript:;">网站基本信息</a></li>
+        <li><a onclick="tabs('#contentTab',2);" href="javascript:void(0);">邮件发送配置</a></li>
+    </ul>
+
+    <div class="tab_con" style="display:block;">
+        <table class="form_table">
+            <col width="180px"><col>
+            <tbody>
+            <tr>
+                <th>站点名称：</th>
+                <td><input name="webname" type="text" value="{$list.webname}" maxlength="100" id="webname" class="txtInput normal required" /><label>*</label></td>
+            </tr>
+            <tr>
+                <th>公司名称：</th>
+                <td><input name="webcompany" type="text" value="{$list.webcompany}" maxlength="100" id="webcompany" class="txtInput normal required" /><label>*</label></td>
+            </tr>
+            <tr>
+                <th>网站域名：</th>
+                <td><input name="weburl" type="text" value="{$list.weburl}" maxlength="250" id="weburl" class="txtInput normal required url" /><label>*以“http://”开头</label></td>
+            </tr>
+            <tr>
+                <th>联系电话：</th>
+                <td><input name="webtel" type="text" value="{$list.webtel}" maxlength="50" id="webtel" class="txtInput normal" /></td>
+            </tr>
+            <tr>
+                <th>传真号码：</th>
+                <td><input name="webfax" type="text" value="{$list.webfax}" maxlength="50" id="webfax" class="txtInput normal" /></td>
+            </tr>
+            <tr>
+                <th>管理员邮箱：</th>
+                <td><input name="webmail" type="text" value="{$list.webmail}" maxlength="100" id="webmail" class="txtInput normal email" /></td>
+            </tr>
+            <tr>
+                <th>网站备案号：</th>
+                <td><input name="webcrod" type="text" value="{$list.webcrod}" maxlength="50" id="webcrod" class="txtInput normal" /></td>
+            </tr>
+            <tr>
+                <th>首页标题(SEO)：</th>
+                <td><input name="webtitle" type="text" value="{$list.webtitle}" maxlength="250" id="webtitle" class="txtInput normal required" style="width:350px;" /><label>*自定义的首页标题</label></td>
+            </tr>
+            <tr>
+                <th>页面关健词(SEO)：</th>
+                <td><input name="webkeyword" type="text" value="{$list.webkeyword}" maxlength="250" id="webkeyword" class="txtInput" style="width:350px;" />
+                    <label>页面关键词(keyword)</label></td>
+            </tr>
+            <tr>
+                <th>页面描述(SEO)：</th>
+                <td><textarea name="webdescription" rows="2" cols="20" id="webdescription" class="small">{$list.webdescription}</textarea>
+                    <label>页面描述(description)</label></td>
+            </tr>
+            <tr>
+              <th>网站统计代码：</th>
+              <td><textarea name="webcountcode2" rows="2" cols="20" id="webcountcode2" class="small">{$list.webcountcode2}</textarea>
+                <label>支持HTML格式</label></td>
+            </tr>
+            <tr>
+                <th>网站版权信息：</th>
+                <td><textarea name="webcopyright" rows="2" cols="20" id="webcopyright" class="small">{$list.webcopyright}</textarea><label>支持HTML格式</label></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab_con"></div>
+
+    <div class="tab_con">
+      <table class="form_table">
+            <col width="180px"><col>
+            <tbody>
+            <tr>
+                <th>STMP服务器：</th>
+                <td><input name="emailstmp" type="text" value="{$list.emailstmp}" maxlength="100" id="emailstmp" class="txtInput normal required" /><label>*发送邮件的SMTP服务器地址</label></td>
+            </tr>
+            <tr>
+                <th>SMTP端口：</th>
+                <td><input name="emailport" type="text" value="{$list.emailport}" maxlength="10" id="emailport" class="txtInput small required digits" /><label>*SMTP服务器的端口</label></td>
+            </tr>
+            <tr>
+                <th>发件人地址：</th>
+                <td><input name="emailfrom" type="text" value="{$list.emailfrom}" maxlength="100" id="emailfrom" class="txtInput normal required" /><label>*</label></td>
+            </tr>
+            <tr>
+                <th>邮箱账号：</th>
+                <td><input name="emailusername" type="text" value="{$list.emailusername}" maxlength="100" id="emailusername" class="txtInput normal required" /><label>*</label></td>
+            </tr>
+            <tr>
+                <th>邮箱密码：</th>
+                <td><input name="emailpassword" type="password" maxlength="100" id="emailpassword" class="txtInput normal required" value="{$list.emailpassword}" /><label>*</label></td>
+            </tr>
+            <tr>
+                <th>发件人昵称：</th>
+                <td><input name="emailnickname" type="text" value="{$list.emailnickname}" maxlength="100" id="emailnickname" class="txtInput normal required" /><label>*显示发件人的昵称</label></td>
+            </tr>
+            </tbody>
+      </table>
+    </div>
+    <div class="foot_btn_box">
+      <input type="submit" name="btnSubmit" value="提交保存" id="btnSubmit" class="btnSubmit" />
+    &nbsp;<input name="重置" type="reset" class="btnSubmit" value="重 置" />
+  </div>
+</div>
+</form>
+</body>
+</html>
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>编辑内容信息</title>
+<link href="__PUBLIC__/admin/js/ui/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/admin/images/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.validate.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/messages_cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/ui/js/ligerBuild.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/function.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript">
+    var sendUrl = "{:U('Upload/fileupload')}";
+    //加载编辑器
+    $(function () {
+        var ue = UE.getEditor('content',{
+            serverUrl :'{:U('public/ueditor')}'
+        });
+    });
+    //表单验证
+    $(function () {
+        $("#form1").validate({
+            invalidHandler: function (e, validator) {
+                parent.jsprint("有 " + validator.numberOfInvalids() + " 项填写有误，请检查！", "", "Warning");
+            },
+            errorPlacement: function (lable, element) {
+                //可见元素显示错误提示
+                if (element.parents(".tab_con").css('display') != 'none') {
+                    element.ligerTip({ content: lable.html(), appendIdTo: lable });
+                }
+            },
+            success: function (lable) {
+                lable.ligerHideTip();
+            }
+        });
+    });
+</script>
+</head>
+<body class="mainbody">
+<form name="form1" method="post" action="__URL__/edit" id="form1">
+
+<input type="hidden" value="{$data.id}" name="id" />
+<div class="navigation"><a href="javascript:history.go(-1);" class="back">后退</a>首页 &gt; 内容管理 &gt; 编辑信息</div>
+<div id="contentTab">
+    <ul class="tab_nav">
+        <li class="selected"><a onclick="tabs('#contentTab',0);" href="javascript:;">基本信息</a></li>
+        <li><a onclick="tabs('#contentTab',1);" href="javascript:;">SEO选项</a></li>
+    </ul>
+
+    <div class="tab_con" style="display:block;">
+        <table class="form_table">
+            <col width="150px"><col>
+            <tbody>
+            <tr>
+                <th>所属类别：</th>
+                <td>
+                <select name="classid" id="classid" class="select2 required valid">
+                    <option value="">所属分类</option>
+                    <volist name="classlist" id="vo">
+                    <option value="{$vo.id}" <eq name="vo.id" value="$data.classid">selected="selected"</eq>>
+                        <eq name="vo.level" value="2">　├ </eq>{$vo.title}
+                    </option>
+                    </volist>
+                </select>
+			</td>
+            </tr>
+            <tr>
+                <th>标题名称：</th>
+                <td><input name="title" type="text" value="{$data.title}" maxlength="100" id="title" class="txtInput normal required" /><label>*该信息的名称标题</label></td>
+            </tr>
+            <tr>
+              <th>推荐类型：</th>
+              <td><span id="cblItem">
+                <input name="is_red" type="checkbox" id="cblItem_1" value="1" <eq name="data.is_red" value="1">checked="checked"</eq> />
+              <label for="cblItem_1">推荐</label>
+                <input name="is_hot" type="checkbox" id="cblItem_2" value="1" <eq name="data.is_hot" value="1">checked="checked"</eq> />
+                <label for="cblItem_2">热门</label>
+              </span></td>
+            </tr>
+            <tr>
+              <th>文章作者：</th>
+              <td><input name="author" type="text" value="{$data.author}" maxlength="100" id="author" class="txtInput normal valid" /></td>
+            </tr>
+            <tr>
+              <th>文章来源：</th>
+              <td><input name="from" type="text" value="{$data.from}" maxlength="100" id="from" class="txtInput normal valid" /></td>
+            </tr>
+            <tr>
+              <th>浏览次数：</th>
+              <td><input name="clicktimes" type="text" value="{$data.clicktimes}" maxlength="10" id="clicktimes" class="txtInput small required digits valid" /></td>
+            </tr>
+            <tr>
+              <th>显示图片：</th>
+              <td><input name="image" type="text" class="txtInput normal left" id="image" value="{$data.image}" maxlength="255" />
+                <a href="javascript:;" class="files"><input type="file" id="FileUpload" name="FileUpload" onchange="Upload(sendUrl, 'image');" /></a><span class="uploading">正在上传，请稍候...</span></td>
+            </tr>
+             <tr>
+                <th>文章摘要：200字内</th>
+                <td><textarea name="description" maxlength="255" rows="2" cols="20" id="description required" class="small">{$data.description}</textarea>                    </td>
+            </tr>
+            <tr>
+                <th valign="top">详细内容：</th>
+                <td>
+                    <textarea name="content" id="content" cols="100" rows="8" style="width:99%;height:350px;">{$data.content}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tab_con">
+        <table class="form_table">
+            <col width="150px"><col>
+            <tbody>
+             <tr>
+                <th>SEO标题：</th>
+                <td><input name="seo_title" type="text" class="txtInput normal" id="seo_title" value="{$data.seo_title}" maxlength="255" /></td>
+            </tr>
+            <tr>
+                <th>SEO关健字：</th>
+                <td><textarea name="seo_keyword" rows="2" cols="20" id="seo_keyword" class="small">{$data.seo_keyword}</textarea></td>
+            </tr>
+            <tr>
+                <th>SEO描述：</th>
+                <td><textarea name="seo_discription" rows="2" cols="20" id="seo_discription" class="small">{$data.seo_discription}</textarea></td>
+            </tr>
+            </tbody>
+      </table>
+    </div>
+
+    <div class="foot_btn_box">
+    <input type="submit" name="btnSubmit" value="提交保存" id="btnSubmit" class="btnSubmit" />
+    &nbsp;<input name="重置" type="reset" class="btnSubmit" value="重 置" />
+    </div>
+</div>
+</form>
+</body>
+</html>

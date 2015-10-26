@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>日志管理</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/js/ui/skins/Aqua/css/ligerui-all.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/images/style.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/css/pagination.css" />
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/ui/js/ligerBuild.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/function.js"></script>
+</head>
+<body class="mainbody">
+
+<form name="form1" method="post" action="__SELF__" id="form1">
+
+<script type="text/javascript">
+//<![CDATA[
+function __doPostBack() {
+	var form = $('#form1');
+	form.attr('action', '__URL__/delall');
+	form.submit();
+}
+function __doSerchBack() {
+	var form = $('#form1');
+	form.attr('action', '__SELF__');
+	form.submit();
+}
+//]]>
+</script>
+
+
+  <div class="navigation">首页 &gt; 日志管理 &gt; 日志</div>
+    <div class="tools_box">
+	    <div class="tools_bar">
+            <div class="search_box">
+			    用户 <input name="author" type="text" id="author" class="txtInput" />
+                操作 <input name="action" type="text" id="action" class="txtInput" />
+                状态 <input name="content" type="text" id="content" class="txtInput" />
+                <input type="submit" name="btnSearch" value="搜 索" id="btnSearch" class="btnSearch" />
+		    </div>
+		    <a href="javascript:void(0);" onclick="checkAll(this);" class="tools_btn"><span><b class="all">全选</b></span></a>
+            <a onclick="return ExePostBack('btnDelete');" id="btnDelete" class="tools_btn" href="javascript:__doPostBack('btnDelete','')"><span><b class="delete">批量删除</b></span></a>
+        </div>
+    </div>
+
+    <!--列表展示.开始-->
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="msgtable">
+      <tr>
+        <th width="6%">选择</th>
+        <th width="20%" align="left">用户</th>
+        <th width="21%" align="left">操作</th>
+        <th width="37%" align="left">状态</th>
+        <th width="16%" align="left">时间</th>
+      </tr>
+    <volist name="list" id="vo">
+      <tr>
+        <td align="center">
+        <span class="checkall">
+        <input id="rptList_ctl01_chkId" type="checkbox" name="id[]" value="{$vo.id}" /></span>
+        </td>
+        <td>{$vo.author}</td>
+        <td>{$vo.action}</td>
+        <td>{$vo.content}</td>
+        <td>{$vo.datetime|date="Y-m-d h:i:s",###}</td>
+      </tr>
+    </volist>
+    
+      </table>
+    
+    <!--列表展示.结束-->
+
+  <div class="line15"></div>
+    <div class="page_box"><div id="PageContent" class="flickr right">{$page}</div></div>
+    <div class="line10"></div>
+
+</form>
+</body>
+</html>

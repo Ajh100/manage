@@ -1,0 +1,46 @@
+<volist name="tree" id="list">
+      <tr>
+        <td align="center"><span class="checkall">
+          <input id="rptList_ctl01_chkId" type="checkbox" name="id[]" value="{$list.id}" />
+        </span></td>
+        <td>
+        <eq name="list.pid" value="0">
+            <img src="__PUBLIC__/admin/images/folder_open.gif" align="absmiddle">
+            <a href="__URL__/edit/id/{$list.id}">{$list.title}</a>     
+        <else/>
+			<span style="width:46px;text-align:right;display:inline-block;">
+            <img src="__PUBLIC__/admin/images/t.gif" align="absmiddle">
+            <img src="__PUBLIC__/admin/images/folder_open.gif" align="absmiddle">
+            </span>
+            <a href="__URL__/edit/id/{$list.id}">{$list.title}</a>        
+        </eq>
+
+        
+        </td>
+        <td>{$list.pinyin}</td>
+        <td align="center"><input type="text" value="{$list.sort}" id="rptList_ctl01_txtSortId" class="txtInput2 small2" onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)));" /></td>
+        <td align="center">
+          <eq name="list.is_red" value="1">
+          	  <img src="__PUBLIC__/admin/images/ico-2.png" title="推荐">
+          <else/>
+          	  <img src="__PUBLIC__/admin/images/ico-2_.png" title="">
+          </eq>
+          <eq name="list.is_hot" value="1">
+          	  <img src="__PUBLIC__/admin/images/ico-3.png" title="热门">
+          <else/>
+          	  <img src="__PUBLIC__/admin/images/ico-3_.png" title="">
+          </eq>
+          <eq name="list.is_lock" value="1">
+          	  <img src="__PUBLIC__/admin/images/icon_disable.png" title="隐藏">
+          <else/>
+          	  <img src="__PUBLIC__/admin/images/icon_correct.png" title="可见">
+          </eq>
+        </td>
+        <td align="center"><a href="__URL__/edit/id/{$list.id}">修改</a></td>
+      </tr>
+		<notempty name="list['_child']">
+			<dd>
+				{:R('CarLevel/tree', array($list['_child']))}
+			</dd>
+		</notempty>
+</volist>

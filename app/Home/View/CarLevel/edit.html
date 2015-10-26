@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>编辑车辆级别</title>
+<link href="__PUBLIC__/admin/js/ui/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/admin/images/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery.validate.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/messages_cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/ui/js/ligerBuild.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/function.js"></script>
+<script type="text/javascript">
+    //表单验证
+    $(function () {
+        $("#form1").validate({
+            errorPlacement: function (lable, element) {
+                element.ligerTip({ content: lable.html(), appendIdTo: lable });
+            },
+            success: function (lable) {
+                lable.ligerHideTip();
+            }
+        });
+    });
+</script>
+</head>
+<body class="mainbody">
+<form name="form1" method="post" action="__SELF__" id="form1">
+
+<input type="hidden" name="id" value="{$data.id}" />
+
+<div class="navigation"><a href="javascript:history.go(-1);" class="back">后退</a>首页 &gt; 车辆级别管理 &gt; 车辆级别</div>
+<div id="contentTab">
+    <ul class="tab_nav">
+        <li class="selected"><a onclick="tabs('#contentTab',0);" href="javascript:;">编辑车辆级别</a></li>
+    </ul>
+    <div class="tab_con" style="display:block;">
+      <table class="form_table">
+        <col width="180px" />
+        <col />
+        <tbody>
+          <tr>
+            <th>级别名称：</th>
+            <td><input name="title" type="text" class="txtInput normal required" id="txtTitle" value="{$data.title}" maxlength="255" minlength="2" />
+            <label>*</label></td>
+          </tr>
+          <tr>
+            <th>父级：</th>
+            <td>
+            <select name="pid" id="pid" class="select2">
+              <option value="">请选择父级...</option>
+              <volist name="list" id="vo">
+                <option value="{$vo.id}" <eq name="vo.id" value="$data.pid">selected="selected"</eq>>{$vo.title}</option>
+              </volist>
+            </select>
+            </td>
+          </tr>
+          <tr>
+            <th>拼音简写：</th>
+            <td><input name="pinyin" type="text" class="txtInput normal required" id="pinyin" value="{$data.pinyin}" maxlength="50" /></td>
+          </tr>
+            <tr>
+              <th>推荐类型：</th>
+              <td><span id="cblItem">
+                <input name="is_red" type="checkbox" id="cblItem_1" value="1" <eq name="data.is_red" value="1">checked="checked"</eq> />
+              <label for="cblItem_1">推荐</label>
+                <input name="is_hot" type="checkbox" id="cblItem_2" value="1" <eq name="data.is_hot" value="1">checked="checked"</eq> />
+                <label for="cblItem_2">热门</label>
+                <input name="is_lock" type="checkbox" id="cblItem_3" value="1" <eq name="data.is_lock" value="1">checked="checked"</eq> />
+                <label for="cblItem_3">隐藏</label>
+              </span></td>
+            </tr>
+          <tr>
+            <th>排 序：</th>
+            <td><input name="sort" type="text" value="{$data.sort}" id="sort" class="txtInput normal small required digits" />
+            <label>*</label></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><input type="submit" name="btnSubmit" value="提交保存" id="btnSubmit" class="btnSubmit" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+</div>
+</form>
+</body>
+</html>

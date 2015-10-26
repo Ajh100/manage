@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>管理首页</title>
+<link href="__PUBLIC__/admin/images/style.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+.nlist3 ul li {
+float: left;
+margin-right: 10px;
+width: 18%;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+</style>
+</head>
+<body class="mainbody">
+
+<div class="navigation nav_icon">你好，<i>{$info['user']['account']}({$info['user']['username']})</i>，欢迎进入后台管理中心</div>
+<div class="line10"></div>
+<div class="nlist1">
+	<ul>
+    	<li>本次登录IP：{$info['now_login_ip']}</li>
+        <li>上次登录时间：{$info['user']['last_login_time']|date="Y-m-d h:i:s",###}</li>
+    </ul>
+</div>
+
+<div class="line10"></div>
+<div class="nlist2 clearfix">
+    <h2>站点信息</h2>
+    <ul>
+    	<li>操作系统: {$info['system']}</li>
+        <li>主机名IP端口: {$info['hostport']}</li>
+        <li>服务器: {$info['server']}</li>
+        <li>PHP运行方式: {$info['php_env']}</li>
+        <li>程序目录：{$info['app_dir']}</li>
+        <li>MYSQL版本：{$info['mysql']}</li>
+        <li>GD库版本：{$info['gd']}</li>
+        <li>上传附件限制：{$info['upload_size']}</li>
+        <li>执行时间限制：{$info['exec_time']}</li>
+        <li>剩余空间：{$info['disk_free']}</li>
+        <li>服务器时间：{$info['server_time']}</li>
+        <li>北京时间：{$info['beijing_time']}</li>
+        <li>allow_url_fopen：{$info['fopen']}</li>
+        <li>register_globals：{$info['reg_gbl']}</li>
+        <li>magic_quotes_gpc：{$info['quotes_gpc']}</li>
+    </ul>
+    <div class="line10"></div>
+</div>
+<div class="clear" style="height:20px;"></div>
+
+<div class="clear" style="height:20px;"></div>
+
+
+</body>
+</html>
+

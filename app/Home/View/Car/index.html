@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>车源管理</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/js/ui/skins/Aqua/css/ligerui-all.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/images/style.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/css/pagination.css" />
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/ui/js/ligerBuild.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/function.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+function __doSerchBack() {
+	var form = $('#form1');
+	form.attr('action','__SELF__');
+	form.submit();
+}
+//]]>
+</script>
+</head>
+<body class="mainbody">
+<form name="form1" method="post" action="__SELF__" id="form1">
+
+    <div class="navigation">首页 &gt; 车源管理 &gt; 管理列表</div>
+    <div class="tools_box">
+	<div class="tools_bar">
+            <div class="select_box" style="width:800px;float:left;padding-top:10px;background:none;">
+            请选择：
+<select onchange="javascript:__doSerchBack()" name="city_id" id="city_id" class="select2">
+	<option selected="selected" value="">所有城市</option>
+    <volist name="city" id="vo">
+	<option <eq name="map.city_id" value="$vo.id">selected="selected"</eq> value="{$vo.id}">{$vo.title}</option>
+	</volist>
+</select>
+&nbsp;
+<select onchange="javascript:__doSerchBack()" name="store_id" id="store_id" class="select2">
+	<option selected="selected" value="">所有店铺</option>
+    <volist name="store" id="vo">
+	<option <eq name="map.store_id" value="$vo.id">selected="selected"</eq> value="{$vo.id}">{$vo.title}</option>
+	</volist>
+</select>
+&nbsp;
+<select onchange="javascript:__doSerchBack()" name="status" id="status" class="select2">
+    <option value="">销售状态</option>
+    <option <eq name="map.status" value="1">selected="selected"</eq> value="1">在售</option>
+    <option <eq name="map.status" value="2">selected="selected"</eq> value="2">特价</option>
+    <option <eq name="map.status" value="3">selected="selected"</eq> value="3">下架</option>
+	<option <eq name="map.status" value="3">selected="selected"</eq> value="4">已售</option>
+</select>
+
+<a href="{:U('Car/Index')}"" class="btnSearch" style="padding:4px;">全部</a>
+	    </div>
+            <div class="search_box">
+			    <input name="keywords" type="text" id="keywords" class="txtInput" />
+                <input type="submit" name="btnSearch" value="搜 索" id="btnSearch" class="btnSearch" />
+            </div>
+        </div>
+
+    </div>
+
+    <!--列表展示.开始-->
+    
+    <!--列表展示.结束-->
+
+    <!--图片展示.开始-->
+    
+    <div class="photo_list2 clearfix">
+      <ul>
+    <volist name="list" id="vo">
+      <li>
+        <div class="box">
+          <eq name="vo.status" value="1"><a style="padding:5px;background:#E84C3D;float:right;color:#fff;margin:5px;">在售</a></eq>
+          <eq name="vo.status" value="2"><a style="padding:5px;background:#F1C40F;float:right;color:#fff;margin:5px;">特价</a></eq>
+          <eq name="vo.status" value="3"><a style="padding:5px;background:#BEC3C7;float:right;color:#fff;margin:5px;">下架</a></eq>
+          <eq name="vo.status" value="4"><a style="padding:5px;background:#FEC3C7;float:right;color:#fff;margin:5px;">已售</a></eq>
+          <a href="{:C('WEB_PC_URL')}/car/detail/{$vo.id}" target="_blank">
+          <img src="{$Think.config.WEB_RES_URL}{$vo.cover}" class="cover" />
+          </a>
+          <dl>
+            <dt><a title="点击查看" href="{:C('WEB_PC_URL')}/car/detail/{$vo.id}" target="_blank">{$vo.title}</a></dt>
+            <dd>员工姓名：{$vo.uid|get_saleman_name} &nbsp; 浏览：{$vo.clicktimes}</dd>
+            <dd>发布时间：{$vo.addtime|date="Y-m-d H:i:s",###}</dd>
+            <eq name="vo.status" value="5">
+            <dd>售价：{$vo.sellprice}&nbsp; 时间：{$vo.selltime|date="Y-m-d",###}&nbsp; 买主：{$vo.buyname}</dd>
+            </eq>
+            <dd>店铺：{$vo.store_id|get_store_name}</dd>
+            <dd class="btns" style="margin-top:-25px;">
+              <span class="right">
+                  <a href="{:C('WEB_PC_URL')}/car/detail/{$vo.id}" target="_blank"><img src="__PUBLIC__/admin/images/ico-6.png" style="vertical-align:middle;" title="查看" /></a>
+              </span>
+            </dd>
+          </dl>
+          <div class="clear"></div>
+        </div>
+      </li>
+    </volist>
+      </ul>
+    </div>
+    
+    <!--图片展示.结束-->
+  <div class="line15"></div>
+    <div class="page_box"><class="right">共 {$count} 条</div><div id="PageContent" class="flickr right">{$page}</div></div>
+    <div class="line10"></div>
+</form>
+</body>
+</html>

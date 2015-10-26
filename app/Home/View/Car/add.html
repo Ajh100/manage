@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>添加车源</title>
+<link href="__PUBLIC__/admin/images/style.css" rel="stylesheet" type="text/css" />
+
+<link href="__PUBLIC__/car.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/swfobject/swfobject.js"></script>
+<script type="text/javascript" src="__PUBLIC__/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/swfupload/handlers.js"></script>
+<script type="text/javascript" src="__PUBLIC__/car.js"></script>
+
+<script type="text/javascript">
+$(function(){ 
+
+SlectMenu.init();
+
+$('#CarSubmit').click(function(){
+	CarValidate.validate();
+	if(CarValidate.IsCheckPass){
+		alert('验证成功');
+		$('#form1').submit();
+	}
+});
+
+
+});
+</script>
+<script type="text/javascript">
+var swfu;
+window.onload = function () {
+	swfu = new SWFUpload({
+		// Backend Settings
+		upload_url: "__APP__/Member/Upload/ajaxUpload",
+		post_params: {"PHPSESSID": "5oqnpb0cb6hiqkkamr94o4cmc5"},
+
+		// File Upload Settings
+		file_size_limit : "2 MB",	// 2MB
+		file_types : "*.jpg",
+		file_types_description : "JPG Images",
+		file_upload_limit : 0,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess,
+		upload_complete_handler : uploadComplete,
+		button_image_url : "",
+		button_placeholder_id : "spanButtonPlaceholder",
+		button_width: 155,
+		button_height: 135,
+		button_text : '',
+		button_text_style : '',
+		button_text_top_padding: 0,
+		button_text_left_padding: 18,
+		button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+		button_cursor: SWFUpload.CURSOR.HAND,
+		flash_url : "__PUBLIC__/swfupload/swfupload.swf",
+		custom_settings : {
+			upload_target : "divFileProgressContainer",
+			cancelButtonId: "clearUploadImage"
+		},
+		debug: false
+	});
+};
+</script>
+
+</head>
+<body class="mainbody">
+<form name="form1" method="post" action="__URL__/insert" id="form1">
+
+
+<div class="navigation"><a href="javascript:history.go(-1);" class="back">后退</a>首页 &gt; 车源管理 &gt; 车源</div>
+<div id="contentTab">
+    <ul class="tab_nav">
+        <li class="selected"><a onclick="tabs('#contentTab',0);" href="javascript:;">添加车源</a></li>
+    </ul>
+    <div class="tab_con" style="display:block;">
+  <div class="freecont">
+  <table width="800" border="0" align="left" cellpadding="0" cellspacing="0" class="tw_table">
+    <tr>
+      <td height="35" align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="73" height="45" align="right">*车辆信息：</td>
+      <td width="727"><div>
+        <div class="dropdown">
+          <input id="brand_title" name="brand_title" class="input_select" type="text" value="请选择品牌" readonly="readonly" />
+          <ul id="brand_div" class="dropdownUlList">
+            <volist name="brand" id="vo">
+              <li><a href="#" onclick="SlectMenu.brand_click('{$vo.title}',{$vo.id},this);">{$vo.letter}{$vo.title}</a></li>
+            </volist>
+          </ul>
+          <input type="hidden" name="brand_value" id="brand_value" />
+        </div>
+        <div class="dropdown">
+          <input id="series_title" name="series_title" class="input_select" type="text" value="请选择车系" readonly="readonly" />
+          <ul id="series_div" class="dropdownUlList">
+          </ul>
+          <input type="hidden" name="series_value" id="series_value" />
+        </div>
+        <div class="dropdown">
+          <input id="class_title" name="class_title" class="input_select" type="text" value="请选择车型" readonly="readonly" />
+          <ul id="class_div" class="dropdownUlList">
+          </ul>
+          <input type="hidden" name="class_value" id="class_value" />
+        </div>
+      </div></td>
+    </tr>
+    <tr>
+      <td height="45" align="right">上牌时间：</td>
+      <td>
+        <div class="dropdown" style="width:90px;">
+          <input id="regtime_title" name="regtime_title" style="width:90px;" class="input_select" type="text" value="年份" readonly="readonly" />
+          <ul style="width:90px;" id="regtime_div" class="dropdownUlList">
+            <volist name="datatimeyear" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.regtime_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div class="dropdown" style="width:60px;">
+          <input style="width:60px;" id="regtimedate_title" name="regtimedate_title" class="input_select" type="text" value="日期" readonly="readonly" />
+          <ul style="width:60px;" id="regtimedate_div" class="dropdownUlList">
+            <volist name="datatimedate" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.regtimedate_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right">行驶里程：</td>
+      <td align="left"><input type="text" name="mileage" id="mileage" class="input_select" />
+      万公里</td>
+    </tr>
+    <tr>
+      <td height="45" align="right">车身颜色：</td>
+      <td>
+      <ul class="t_color" id="colorall">
+        <volist name="color" id="vo">
+        <li id="color{$vo.id}" onclick="SlectMenu.SelectColor({$vo.id})"><a href="javascript:void(0);">
+              <span class="eq" style="background:{$vo.code};"></span>{$vo.title}</a>
+        </li>
+        </volist>
+      </ul>
+      <input type="hidden" id="color_id" name="color_id" value="" />
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right">年检到期：</td>
+      <td>
+        <div class="dropdown" style="width:90px;">
+          <input id="inspeyear_title" name="inspeyear_title" style="width:90px;" class="input_select" type="text" value="年份" readonly="readonly" />
+          <ul style="width:90px;" id="inspeyear_div" class="dropdownUlList">
+            <volist name="datatimeyear" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inspeyear_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div class="dropdown" style="width:60px;">
+          <input style="width:60px;" id="inspemonth_title" name="inspemonth_title" class="input_select" type="text" value="日期" readonly="readonly" />
+          <ul style="width:60px;" id="inspemonth_div" class="dropdownUlList">
+            <volist name="datatimedate" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inspemonth_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right">交强险到期：</td>
+      <td>
+        <div class="dropdown" style="width:90px;">
+          <input id="inuyear_title" name="inuyear_title" style="width:90px;" class="input_select" type="text" value="年份" readonly="readonly" />
+          <ul style="width:90px;" id="inuyear_div" class="dropdownUlList">
+            <volist name="datatimeyear" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inuyear_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div class="dropdown" style="width:60px;">
+          <input style="width:60px;" id="inumonth_title" name="inumonth_title" class="input_select" type="text" value="日期" readonly="readonly" />
+          <ul style="width:60px;" id="inumonth_div" class="dropdownUlList">
+            <volist name="datatimedate" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inumonth_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right" valign="top" class="nomar">上传图片：</td>
+      <td align="left" class="nomar">
+                    <div class="uplo_pic">
+                        <ul id="CarImgsUl">
+                          <li id="uploadModel2" class="">
+                                <div class="uplo_list">
+                                    <div id="uploadModel2_flash" class="up-div">
+                                        <span class="icon-up">
+                                            <div id="flashObject2" class="up_zjfile">
+                                            	<span id="spanButtonPlaceholder"></span>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="uplo_list-tx">
+                                        <a id="pcUpload" class="cur" href="javascript:void(0);">选择图片</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="divFileProgressContainer" style="display: block;"></div>
+                    <div id="ErrorImage" style="display:none;" class="nocover">
+                        请设置封面
+                    </div>
+                    
+                    <input type="hidden" id="carCover" name="cover" value="" />
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right" valign="top">&nbsp;</td>
+      <td height="130" align="left" valign="top" id="div_prompt">
+      <div><img src="__PUBLIC__/images/pic-flash.png" style="width: 461px; height: 118px" /></div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right" valign="top">车主描述：</td>
+      <td align="left"><textarea name="description" cols="50" rows="5" id="description" class="input_select" style="width:300px;height:100px;"></textarea></td>
+    </tr>
+    <tr>
+      <td height="45" align="right">车主报价：</td>
+      <td align="left"><input type="text" name="price" id="price" class="input_select" /></td>
+    </tr>
+    <tr>
+      <td height="35" align="right">车主姓名：</td>
+      <td align="left">
+      	<input type="text" name="realname" id="realname" class="input_select" />
+      </td>
+    </tr>
+    <tr>
+      <td height="35" align="right">车主电话：</td>
+      <td align="left"><input type="text" name="tel" id="tel" class="input_select" /></td>
+    </tr>
+    <tr>
+      <td height="35" align="right">&nbsp;</td>
+      <td align="left"><a href="javascript:void(0);" id="CarSubmit"></a></td>
+    </tr>
+    <tr>
+      <td height="35" align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td height="35" align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td height="35" align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+  </div>    
+    </div>
+    
+</div>
+</form>
+</body>
+</html>
