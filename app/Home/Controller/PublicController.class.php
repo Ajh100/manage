@@ -63,6 +63,7 @@ class PublicController extends Controller{
         $loginErrorTimes = cookie('login_error_times');
         if(is_array($result) and $result['status'] == 1){
             if($result['password'] != think_manager_md5(I('post.txtuserpwd'), C('DATA_AUTH_KEY'))){
+            //if($result['password'] != I('post.txtuserpwd')){
                 log_write(I('post.txtusername'),'管理登录','失败[密码错误]'.get_client_ip());
                 $loginErrorTimes > 0 ? $loginErrorTimes++ : $loginErrorTimes = 1;
                 cookie('login_error_times', $loginErrorTimes ,array('expire'=>180));

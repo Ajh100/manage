@@ -7,3 +7,7 @@
 	DB_NAME:jh100
 	DB_USER:xxg3053
 	DB_PWD:xxg111063053
+
+## 测试数据
+
+管理员admin/admin
